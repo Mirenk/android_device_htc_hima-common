@@ -128,8 +128,8 @@ PRODUCT_PACKAGES += \
     liboverlay
 
 # Dot View Case
-#PRODUCT_PACKAGES += \
-#    Dotcase
+PRODUCT_PACKAGES += \
+    Dotcase
 
 # DRM
 PRODUCT_PACKAGES += \
