@@ -53,7 +53,9 @@ BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01f88000 -
 BOARD_RAMDISK_OFFSET := 0x02000000
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_SOURCE := kernel/htc/msm8994
-TARGET_KERNEL_CONFIG := lineageos_hima_defconfig
+TARGET_KERNEL_CONFIG := chinomofu_defconfig
+KERNEL_TOOLCHAIN_PREFIX := aarch64-linux-android-
+KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-android-8.x/bin
 
 # Audio
 AUDIO_FEATURE_ENABLED_ACDB_LICENSE := true
