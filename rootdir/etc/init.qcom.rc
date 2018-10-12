@@ -130,6 +130,7 @@ on post-fs-data
     # Create directory for NFC
     mkdir /data/nfc 0770 nfc nfc
     mkdir /data/nfc/param 0770 nfc nfc
+    mkdir /data/vendor/nfc 0770 nfc nfc
 
     # Create directoy for PERFD
     mkdir /data/misc/perfd 0755 root system
@@ -375,12 +376,6 @@ service energy-awareness /system/vendor/bin/energy-awareness
     group system
     oneshot
 
-service imscmservice /system/vendor/bin/imscmservice
-    class main
-    user system
-    group radio net_raw oem_2950 log
-    writepid /dev/cpuset/system-background/tasks
-
 service ipacm-diag /system/vendor/bin/ipacm-diag
     class main
     user system
@@ -480,7 +475,6 @@ service ppd /system/vendor/bin/mm-pp-daemon
 
 # WPA
 service wpa_supplicant /system/vendor/bin/hw/wpa_supplicant \
-    -m/data/vendor/wifi/wpa/p2p_supplicant.conf \
     -puse_p2p_group_interface=1p2p_device=1 \
     -O/data/vendor/wifi/wpa/sockets/ \
     -g@android:wpa_wlan0
