@@ -16,6 +16,8 @@
 
 # Inherit proprietary blobs
 $(call inherit-product-if-exists, vendor/htc/hima-common/hima-common-vendor.mk)
+# Device was launched with L
+$(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_l_mr1.mk)
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += \
@@ -35,9 +37,6 @@ PRODUCT_ENFORCE_RRO_TARGETS := framework-res
 TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1080
 TARGET_BOOTANIMATION_HALF_RES := true
-
-# Add WiFi Config files
-$(call inherit-product, hardware/broadcom/wlan/bcmdhd/firmware/bcm4356/device-bcm.mk)
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -72,12 +71,19 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml \
     frameworks/native/data/etc/android.hardware.vulkan.level-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level.xml \
     frameworks/native/data/etc/android.hardware.vulkan.version-1_0_3.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.version.xml \
-    $(LOCAL_PATH)/configs/com.htc.software.market.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.htc.software.market.xml
+    $(LOCAL_PATH)/configs/permissions/com.htc.software.market.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.htc.software.market.xml \
+    $(LOCAL_PATH)/configs/permissions/com.htc.htcadaptivesound_c.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.htc.htcadaptivesound_c.xml \
+    $(LOCAL_PATH)/configs/permissions/com.htc.sensor.autocalibration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.htc.sensor.autocalibration.xml \
+    $(LOCAL_PATH)/configs/permissions/com.htc.sensor.sensorhub.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.htc.sensor.sensorhub.xml \
+    $(LOCAL_PATH)/configs/permissions/com.htc.voicedictation_c.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.htc.voicedictation_c.xml \
+    $(LOCAL_PATH)/configs/permissions/com.htc.key.dap.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.htc.voicedictation_c.xml \
+    $(LOCAL_PATH)/configs/permissions/com.htc.sensor.hallsensor.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.htc.voicedictation_c.xml
 
 # Audio
 PRODUCT_PACKAGES += \
-    android.hardware.audio@2.0-impl \
-    android.hardware.audio.effect@2.0-impl \
+    android.hardware.audio@4.0-impl \
+    android.hardware.audio@2.0-service \
+    android.hardware.audio.effect@4.0-impl \
     audio.a2dp.default \
     audio.primary.msm8994 \
     audio.r_submix.default \
@@ -107,6 +113,7 @@ PRODUCT_COPY_FILES += \
 # Bluetooth
 PRODUCT_PACKAGES += \
     android.hardware.bluetooth@1.0-impl \
+    android.hardware.bluetooth@1.0-service \
     libbt-vendor
 
 # Camera
@@ -125,8 +132,8 @@ PRODUCT_PACKAGES += \
 # Display
 PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-impl \
+    android.hardware.graphics.allocator@2.0-service \
     android.hardware.graphics.composer@2.1-impl \
-    android.hardware.graphics.composer@2.1-service \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
@@ -134,7 +141,6 @@ PRODUCT_PACKAGES += \
     gralloc.msm8994 \
     hwcomposer.msm8994 \
     memtrack.msm8994 \
-    liboverlay \
     libtinyxml
 
 # Dot View Case
@@ -160,8 +166,8 @@ PRODUCT_COPY_FILES += \
 
 # Health
 PRODUCT_PACKAGES += \
-    android.hardware.health@1.0-impl \
-    android.hardware.health@1.0-service
+    android.hardware.health@2.0-impl \
+    android.hardware.health@2.0-service
 
 # HTC Logging functions
 PRODUCT_PACKAGES += \
@@ -220,7 +226,7 @@ PRODUCT_PACKAGES += \
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
-    vendor.lineage.livedisplay@1.0-service-legacymm
+    vendor.lineage.livedisplay@2.0-service-legacymm
 
 # Media
 PRODUCT_COPY_FILES += \
@@ -265,17 +271,15 @@ PRODUCT_PACKAGES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.1-service-qti
+    android.hardware.power@1.0-impl \
+    android.hardware.power@1.0-service \
+    power.qcom
 
 # QMI
 PRODUCT_PACKAGES += \
     dsi_config.xml \
     netmgr_config.xml \
     qmi_config.xml
-
-# Recovery
-PRODUCT_PACKAGES += \
-    librecovery_updater_hima
 
 # Renderscript
 PRODUCT_PACKAGES += \

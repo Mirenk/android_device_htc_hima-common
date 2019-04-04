@@ -34,9 +34,15 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.audio.spkr.cal.duration=0
 
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.config.media_vol_steps=25 \
+    ro.config.vc_call_vol_steps=7
 # Bluetooth
 PRODUCT_PROPERTY_OVERRIDES += \
-   ro.bt.bdaddr_path=/sys/module/htc_bdaddress/parameters/bdaddress
+   ro.bt.bdaddr_path=/sys/module/htc_bdaddress/parameters/bdaddress \
+   ro.bluetooth.hfp.ver=1.6 \
+   bluetooth.hfp.client=1 \
+   vendor.qcom.bluetooth.soc=rome
 
 # Dalvik heap
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -71,6 +77,27 @@ PRODUCT_PROPERTY_OVERRIDES += \
     media.aac_51_output_enabled=true \
     mm.enable.smoothstreaming=true
 
+#system props for the MM modules
+PRODUCT_PROPERTY_OVERRIDES += \
+    media.stagefright.enable-player=true \
+    media.stagefright.enable-http=true \
+    media.stagefright.enable-aac=true \
+    media.stagefright.enable-qcp=true \
+    media.stagefright.enable-fma2dp=true \
+    media.stagefright.enable-scan=true \
+    mmp.enable.3g2=true \
+    av.debug.disable.pers.cache=true
+
+#3379827: Decimal sum after adding WAV parser flag
+#37491 is decimal sum of supported codecs in AAL
+#codecs: DivX DivXHD AVI AC3 ASF AAC QCP DTS 3G2 MP2TS
+PRODUCT_PROPERTY_OVERRIDES += \
+    mm.enable.qcom_parser=3379827
+
+# Print clip name being played
+PRODUCT_PROPERTY_OVERRIDES += \
+    media.stagefright.log-uri=1
+
 # NFC
 PRODUCT_PROPERTY_OVERRIDES += \
     debug.nfc.fw_download=true \
@@ -87,10 +114,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.rild.nitz_short_ons_1="" \
     persist.rild.nitz_short_ons_2="" \
     persist.rild.nitz_short_ons_3=""
-
-# OMX
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.media.treble_omx=false
 
 # Perf
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -114,4 +137,5 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Wifi
 PRODUCT_PROPERTY_OVERRIDES += \
-    wifi.interface=wlan0
+    wifi.interface=wlan0 \
+    wifi.direct.interface=p2p-dev-wlan0

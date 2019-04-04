@@ -72,7 +72,6 @@ AUDIO_FEATURE_ENABLED_PROXY_DEVICE := true
 AUDIO_FEATURE_ENABLED_SPKR_PROTECTION := true
 BOARD_USES_ALSA_AUDIO := true
 USE_CUSTOM_AUDIO_POLICY := 1
-USE_LEGACY_LOCAL_AUDIO_HAL := true
 USE_XML_AUDIO_POLICY_CONF := 1
 
 # Bluetooth
@@ -85,7 +84,8 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 TARGET_SPECIFIC_CAMERA_PARAMETER_LIBRARY := libcamera_parameters_ext_hima
 TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
     /system/bin/cameraserver=24 \
-    /system/vendor/bin/mm-qcamera-daemon=24
+    /system/vendor/bin/mm-qcamera-daemon=24 \
+    /system/vendor/bin/hw/android.hardware.bluetooth@1.0-service=24
 
 USE_DEVICE_SPECIFIC_CAMERA := true
 BOARD_GLOBAL_CFLAGS += -DPROPERTY_PERMS_APPEND='{"htc.camera.sensor.", AID_CAMERA, 0}, {"camera.4k2k.", AID_MEDIA, 0},'
@@ -106,7 +106,6 @@ ifeq ($(HOST_OS),linux)
 endif
 
 # Display
-NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 TARGET_USES_C2D_COMPOSITION := true
 TARGET_USES_ION := true
 TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x02000000U
@@ -118,6 +117,7 @@ OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so
 
 # Encryption
 TARGET_HW_DISK_ENCRYPTION := true
+TARGET_KEYMASTER_SKIP_WAITING_FOR_QSEE := true
 
 # Extended filesystem support
 TARGET_EXFAT_DRIVER := sdfat
@@ -132,7 +132,6 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 4697620480
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 25232932864
 TARGET_FS_CONFIG_GEN := $(COMMON_PATH)/config.fs
 TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USERIMAGES_USE_F2FS := true
 
 # HIDL
 DEVICE_MANIFEST_FILE := $(COMMON_PATH)/manifest.xml
@@ -141,6 +140,9 @@ DEVICE_MATRIX_FILE := $(COMMON_PATH)/compatibility_matrix.xml
 # Init
 TARGET_PLATFORM_DEVICE_BASE := /devices/soc.0/
 
+# IPA
+USE_DEVICE_SPECIFIC_DATA_IPA_CFG_MGR := true
+
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
 
@@ -148,7 +150,6 @@ TARGET_PROVIDES_LIBLIGHT := true
 JAVA_SOURCE_OVERLAYS := org.lineageos.hardware|$(COMMON_PATH)/lineagehw|**/*.java
 
 # Power
-TARGET_HAS_NO_WLAN_STATS := true
 TARGET_RPM_SYSTEM_STAT := /d/rpm_stats
 TARGET_USES_INTERACTION_BOOST := true
 
@@ -157,9 +158,6 @@ BOARD_USES_QCOM_HARDWARE := true
 
 # Recovery
 TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/rootdir/etc/recovery.fstab
-
-# RIL
-TARGET_RIL_VARIANT := caf
 
 # Sensors
 BOARD_GLOBAL_CFLAGS += -DCOMPAT_SENSORS_M
@@ -175,6 +173,10 @@ TARGET_LD_SHIM_LIBS := \
     /system/vendor/lib64/libril.so|libshim_ril.so \
     /system/vendor/lib64/libizat_core.so|libshim_gps.so
 
+# Soong namespaces
+PRODUCT_SOONG_NAMESPACES += \
+    device/htc/hima-common/liblog_htc
+
 # Use Snapdragon LLVM, if available
 TARGET_USE_SDCLANG := true
 
@@ -186,8 +188,8 @@ BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 BOARD_HOSTAPD_DRIVER        := NL80211
 BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
-WIFI_DRIVER_FW_PATH_AP      := "/system/vendor/firmware/fw_bcmdhd_apsta.bin"
-WIFI_DRIVER_FW_PATH_STA     := "/system/vendor/firmware/fw_bcmdhd.bin"
+WIFI_DRIVER_FW_PATH_AP      := "/system/etc/firmware/fw_bcm4356_apsta.bin"
+WIFI_DRIVER_FW_PATH_STA     := "/system/etc/firmware/fw_bcm4356.bin"
 
 # inherit from the proprietary version
 -include vendor/htc/hima-common/BoardConfigVendor.mk
